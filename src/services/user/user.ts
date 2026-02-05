@@ -10,6 +10,8 @@ export const login = async (email:string,password:string) => {
 }
 
 export const logout = async () => {
-    const res = await axios.post("http://localhost:3000/api/logout")
+    const res = await axios.post("http://localhost:3000/api/logout",{},{
+        withCredentials: true
+    })
     return res
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import useAuthStore from '@/store/useAuthStore'
 import { useRouter } from 'next/navigation'
 import { getProducts } from '@/services/products/products'
+import { CardAccions } from '@/components/CardAccions/CardAccions'
 
 export const Dashboard = () => {
     const user = useAuthStore((state)=> state.user)
@@ -30,16 +31,11 @@ export const Dashboard = () => {
 
   return (
     <>
-    <section className='flex w-screen h-screen'>
-        <div className='w-60 bg-amber-600'>
-
-        </div>
-        <div className='bg-blue-400'>
-            {products && products.map(product=>(
-                <div key={product._id}>
-                    {product.name}
-                </div>
-            ))}
+    <section className='flex w-full h-full  justify-center'>
+        <div className='p-5 flex flex-wrap gap-20 '>
+            <CardAccions text='Productos' link='/dashboard/products'/>
+            <CardAccions text='Usuarios' link='/dashboard/shifts'/>
+            <CardAccions text='Pedidos' link='/dashboard/shifts'/>
         </div>
     </section>
 

@@ -5,7 +5,7 @@ import useAuthStore from "@/store/useAuthStore";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 
@@ -14,8 +14,19 @@ export default function Home() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loanding, setLoanding] = useState(false)
-    const setUser = useAuthStore((state)=>state.setUser)
+    const setUser = useAuthStore((state) => state.setUser)
     const router = useRouter()
+
+    const { isAuthenticated, hasHydrated } = useAuthStore();
+
+
+    useEffect(() => {
+        if (hasHydrated && isAuthenticated) {
+            router.replace("/dashboard");
+        }
+    }, [hasHydrated, isAuthenticated, router]);
+
+    if (!hasHydrated) return null; // o loader
 
 
     const handleSubmit = async (e) => {
@@ -37,7 +48,7 @@ export default function Home() {
 
                 setUser(data.data.data)
 
-                router.push("/dashboard")
+                router.replace("/dashboard")
 
             }
 
